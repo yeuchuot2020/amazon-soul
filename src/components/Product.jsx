@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {useDispatch} from 'react-redux';
+import {addToCart} from '../slices/cartSlice';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/solid';
 import Currency from 'react-currency-formatter';
@@ -8,10 +10,18 @@ const MIN_RATING = 1;
 
 const Product = ({ id, title, price, description, category, image }) => {
 
+    const dispatch =  useDispatch()
     const [rating] = useState(
         Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
     );
+    
+    const addItemToCart = () => {
+        const product = {
+            id, title, price, description, category, image
+        };
 
+        dispatch(addToCart(product));
+    }
 
     return (
         <div className="relative flex flex-col m-6 bg-white z-30 p-7">
@@ -28,7 +38,7 @@ const Product = ({ id, title, price, description, category, image }) => {
             <div className="mb-4">
                 <Currency quantity={price} currency="VND" />
             </div>
-            <button className="mt-auto text-sm font-medium button">Add to cart</button>
+            <button onClick={addItemToCart} className="mt-auto text-sm font-medium button">Add to cart</button>
         </div>
     )
 }
