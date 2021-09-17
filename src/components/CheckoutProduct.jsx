@@ -37,7 +37,7 @@ const CheckoutProduct = ({ id, title, price, description, category, image, ratin
                     }
                 </div>
                 <p className="text-xs my-2 line-clamp-3">{description}</p>
-                <Currency quantity={price} currency="VND" />
+                <Currency quantity={price} currency="USD" />
             </div>
             <div className="flex flex-col space-y-2 my-auto justify-self-end">
                 <button onClick={addItemToCart} className="button font-semibold ">Thêm vào giỏ</button>

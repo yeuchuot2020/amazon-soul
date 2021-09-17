@@ -41,7 +41,9 @@ const Header = () => {
                         </p>
                         <p className="text-lg font-bold md:text-sm">Account & List</p>
                     </div>
-                    <div className="link">
+                    <div
+                    onClick={()=> router.push('/order')}
+                     className="link">
                         <p className="font-normal">Return</p>
                         <p className="text-lg font-extrabold md:text-sm">& Orders</p>
                     </div>
@@ -52,7 +54,7 @@ const Header = () => {
                             {items.length}
                         </span>
                         <ShoppingCartIcon className="h-8" />
-                        <p className="text-lg mt-2 font-extrabold md:text-sm hidden md:inline">Cart</p>
+                        <p className="text-lg mt-2 font-extrabold md:text-sm hidden md:inline">Giỏ</p>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,9 @@ import Header from '../components/Header';
 import { selectItems, selectTotal } from '../slices/cartSlice';
 import { useSession } from 'next-auth/client';
 import Currency from 'react-currency-formatter';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+const stripePromise = loadStripe(process.env.stripe_public_key);
 
 const Checkout = () => {
 
@@ -12,6 +15,20 @@ const Checkout = () => {
     const total = useSelector(selectTotal);
     const [session] = useSession();
     
+    const createCheckoutSession = async () => {
+        const stripe = await stripePromise;
+
+        const checkoutSession = await axios.post('api/create-checkout-session', {
+            items: items,
+            email: session.user.email
+        });
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: checkoutSession.data.id
+        });
+
+        if(result.error) alert(result.error.message);
+    }
 
     return (
         <div className="bg-gray-200">
@@ -43,11 +60,13 @@ const Checkout = () => {
                             <>
                                 <h2 className="whitespace-nowrap font-bold">Số sản phẩm ({items.length}): {' '}
                                     <span className="font-semibold">
-                                        <Currency quantity={total} currency="VND" /> 
+                                        <Currency quantity={total} currency="USD" /> 
                                     </span>
                                 </h2>
 
                                 <button 
+                                    role="link"
+                                    onClick={createCheckoutSession}
                                     disabled={!session}
                                     className={`button mt-2 ${!session && 'from-gray-300 to-gray-600 border-gray-200 text-yellow-500' }`}>
                                     {

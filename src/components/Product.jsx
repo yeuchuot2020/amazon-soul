@@ -36,7 +36,7 @@ const Product = ({ id, title, price, description, category, image }) => {
                 }
             </div>
             <div className="mb-4">
-                <Currency quantity={price} currency="VND" />
+                <Currency quantity={price} currency="USD" />
             </div>
             <button onClick={addItemToCart} className="mt-auto text-sm font-medium button">Add to cart</button>
         </div>
